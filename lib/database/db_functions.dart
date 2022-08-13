@@ -11,6 +11,7 @@ abstract class NoteDbFunctions {
   Future<List<NoteModel>> getAllNote();
   Future<void> deleteNote(String id);
   Future<void> refreshNoteUi();
+  Future<void> updateNote({required value});
 }
 
 class NoteDb implements NoteDbFunctions {
@@ -25,6 +26,13 @@ class NoteDb implements NoteDbFunctions {
   Future<void> addNoteDb(NoteModel obj) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
     await dB.put(obj.id, obj);
+    refreshNoteUi();
+  }
+
+  @override
+  Future<void> updateNote({required value}) async {
+    final dB = await Hive.openBox<NoteModel>(noteDbName);
+    await dB.put(value.id, value);
     refreshNoteUi();
   }
 

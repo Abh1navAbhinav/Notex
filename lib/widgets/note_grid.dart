@@ -30,7 +30,7 @@ class NoteGrid extends StatelessWidget {
             footer: GridTileBar(
               title: Text(
                 title,
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.quicksand(
                   fontSize: 20,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

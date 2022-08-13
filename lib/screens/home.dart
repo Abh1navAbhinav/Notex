@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:notex/database/db_functions.dart';
 import 'package:notex/main.dart';
 import 'package:notex/screens/all_in_one.dart';
@@ -30,16 +31,28 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 11, 97, 103),
-          title: const Text(
-            'NoteX',
-          ),
-          centerTitle: true,
-          leading: const Image(
-            image: AssetImage(
-              'lib/assets/icons/writing.png',
+          title: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Note',
+                  style: GoogleFonts.chewy(
+                    fontSize: 25,
+                    color: const Color.fromARGB(255, 0, 230, 246),
+                  ),
+                ),
+                TextSpan(
+                  text: 'X',
+                  style: GoogleFonts.chewy(
+                    fontSize: 25,
+                    color: const Color.fromARGB(255, 8, 42, 58),
+                  ),
+                ),
+              ],
             ),
           ),
-          leadingWidth: 30,
+          centerTitle: true,
+          leading: const Icon(Icons.home_rounded),
         ),
         body: SafeArea(
           child: ListView(

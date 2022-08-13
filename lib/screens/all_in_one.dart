@@ -44,15 +44,36 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 11, 97, 103),
-          title: Text(
-            title,
+          title: Text.rich(
+            TextSpan(
+              children: [
+                !isViewing
+                    ? TextSpan(
+                        text: 'Edit : ',
+                        style: GoogleFonts.signikaNegative(
+                          fontSize: 25,
+                          color: const Color.fromARGB(255, 0, 230, 246),
+                        ),
+                      )
+                    : const TextSpan(
+                        text: '',
+                      ),
+                TextSpan(
+                  text: title,
+                  style: GoogleFonts.quicksand(
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
           actions: [
             isViewing
                 ? IconButton(
                     onPressed: () {
                       setState(() {
-                        title = 'Edit: ${widget.model!.title}';
+                        title = widget.model!.title;
                         isEditing = true;
                         isViewing = false;
                       });
@@ -187,7 +208,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
       content: noteContent,
     );
     isEditing
-        ? widget.model!.updateNoteDb(noteModel)
+        ? NoteDb.instance.updateNote(value: noteModel)
         : NoteDb.instance.addNoteDb(noteModel);
     NoteDb.instance.refreshNoteUi();
 
