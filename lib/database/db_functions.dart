@@ -31,7 +31,7 @@ class NoteDb implements NoteDbFunctions {
   @override
   Future<void> deleteNote(String id) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
-    await dB.deleteAt(0);
+    await dB.delete(id);
 
     log(id);
     refreshNoteUi();
