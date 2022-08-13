@@ -210,7 +210,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
       content: noteContent,
     );
     isEditing
-        ? NoteDb.instance.updateNote(index: widget.index, value: noteModel)
+        ? widget.model!.updateNoteDb(noteModel)
         : NoteDb.instance.addNoteDb(noteModel);
     NoteDb.instance.refreshNoteUi();
 
