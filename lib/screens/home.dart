@@ -34,6 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
             'NoteX',
           ),
           centerTitle: true,
+          leading: const Image(
+            image: AssetImage(
+              'lib/assets/icons/writing.png',
+            ),
+          ),
+          leadingWidth: 30,
         ),
         body: SafeArea(
           child: ListView(
