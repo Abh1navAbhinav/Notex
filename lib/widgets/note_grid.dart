@@ -17,37 +17,46 @@ class NoteGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: GridTile(
-        footer: GridTileBar(
-          title: Text(
-            title,
-            style: GoogleFonts.roboto(
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22),
+        color: const Color.fromARGB(255, 8, 42, 58),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: GridTile(
+            footer: GridTileBar(
+              title: Text(
+                title,
+                style: GoogleFonts.roboto(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  NoteDb.instance.deleteNote(id);
+                },
+                icon: const Icon(
+                  Icons.delete,
+                ),
+              ),
+              backgroundColor: const Color.fromARGB(255, 8, 42, 58),
             ),
-          ),
-          trailing: IconButton(
-            onPressed: () {
-              NoteDb.instance.deleteNote(id);
-            },
-            icon: const Icon(
-              Icons.delete,
+            child: ColoredBox(
+              color: const Color.fromARGB(255, 0, 230, 246),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                ),
+                child: Text(content),
+              ),
             ),
-          ),
-          backgroundColor:const Color.fromARGB(255, 8, 42, 58),
-        ),
-        child: ColoredBox(
-          color: const Color.fromARGB(255, 0, 230, 246),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 10,
-              right: 10,
-            ),
-            child: Text(content),
           ),
         ),
       ),

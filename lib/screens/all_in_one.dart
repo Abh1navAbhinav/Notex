@@ -5,6 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notex/database/db_functions.dart';
 import 'package:notex/notex_model/note_model.dart';
+import 'package:notex/styles/styles.dart';
 import 'package:notex/widgets/snack_bar.dart';
 import '../main.dart';
 
@@ -35,119 +36,130 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 8, 42, 58),
-        title: Text(
-          title,
-        ),
-        actions: [
-          isViewing
-              ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      title = 'Edit';
-                      isEditing = true;
-                      isViewing = false;
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.edit_note_rounded,
-                  ),
-                )
-              : const Text(''),
-        ],
-        centerTitle: true,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: Styles().scaffoldColor(),
       ),
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: ListView(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 19,
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 8,
-                ),
-                child: !isViewing
-                    ? Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 8, 42, 58),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: TextFormField(
-                          controller: titleController,
-                          readOnly: isViewing,
-                          decoration: InputDecoration(
-                            hintText: 'Title',
-                            hintStyle:
-                                GoogleFonts.roboto(color: Colors.white60),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          style: GoogleFonts.roboto(color: Colors.white),
-                        ),
-                      )
-                    : const SizedBox(
-                        height: 20,
-                      )),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 19,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 0, 230, 246),
-                ),
-                child: TextFormField(
-                  controller: contentController,
-                  readOnly: isViewing,
-                  decoration: InputDecoration(
-                    hintText: 'Enter the notes...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 11, 97, 103),
+          title: Text(
+            title,
+          ),
+          actions: [
+            isViewing
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        title = 'Edit: ${widget.model!.title}';
+                        isEditing = true;
+                        isViewing = false;
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.edit_note_rounded,
                     ),
-                    filled: true,
+                  )
+                : const Text(''),
+          ],
+          centerTitle: true,
+        ),
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: ListView(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 19,
+              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 8,
                   ),
-                  maxLines: 20,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 19,
-                left: MediaQuery.of(context).size.width / 1.4,
-                right: 8,
-              ),
-              child: isViewing
-                  ? null
-                  : isEditing
-                      ? FloatingActionButton.extended(
-                          onPressed: () {
-                            addNote();
-                          },
-                          label: const Text(
-                            'Update',
+                  child: !isViewing
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 8, 42, 58),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: TextFormField(
+                            controller: titleController,
+                            readOnly: isViewing,
+                            decoration: InputDecoration(
+                              hintText: 'Title',
+                              hintStyle:
+                                  GoogleFonts.roboto(color: Colors.white60),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            style: GoogleFonts.roboto(color: Colors.white),
                           ),
                         )
-                      : FloatingActionButton.extended(
-                          onPressed: () {
-                            addNote();
-                          },
-                          label: const Text(
-                            'Submit',
+                      : const SizedBox(
+                          height: 20,
+                        )),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 19,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromARGB(255, 0, 230, 246),
+                  ),
+                  child: TextFormField(
+                    controller: contentController,
+                    readOnly: isViewing,
+                    decoration: InputDecoration(
+                      hintText: 'Enter the notes...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      filled: true,
+                    ),
+                    maxLines: 20,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 19,
+                  left: MediaQuery.of(context).size.width / 1.5,
+                  right: 8,
+                ),
+                child: isViewing
+                    ? null
+                    : isEditing
+                        ? FloatingActionButton.extended(
+                            onPressed: () {
+                              addNote();
+                            },
+                            label: const Text(
+                              'Update',
+                            ),
+                            icon: const Icon(Icons.update_rounded),
+                            backgroundColor:
+                                const Color.fromARGB(255, 8, 42, 58),
+                          )
+                        : FloatingActionButton.extended(
+                            onPressed: () {
+                              addNote();
+                            },
+                            label: const Text(
+                              'Submit',
+                            ),
+                            icon: const Icon(Icons.upload_file_outlined),
+                            backgroundColor:
+                                const Color.fromARGB(255, 8, 42, 58),
                           ),
-                          backgroundColor: const Color.fromARGB(255, 8, 42, 58),
-                        ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

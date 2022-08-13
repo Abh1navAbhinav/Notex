@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 8, 42, 58),
+          backgroundColor: const Color.fromARGB(255, 11, 97, 103),
           title: const Text(
             'NoteX',
           ),
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 10,
+                height: MediaQuery.of(context).size.height / 12,
               )
             ],
           ),
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {
               isEditing = false;
               isViewing = false;
-              title = 'Add';
+              title = 'Add New Note';
             });
             // NoteDb.instance.refreshNoteUi();
             Get.to(() => AllInOneScreen());
