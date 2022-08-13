@@ -87,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                     Get.to(
                                       () => AllInOneScreen(
+                                        index: index,
                                         model: values,
                                       ),
                                     );

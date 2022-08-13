@@ -13,9 +13,11 @@ class AllInOneScreen extends StatefulWidget {
   AllInOneScreen({
     Key? key,
     this.model,
+    this.index,
   }) : super(key: key);
 
   NoteModel? model;
+  int? index;
 
   @override
   State<AllInOneScreen> createState() => _AllInOneScreenState();
@@ -208,7 +210,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
       content: noteContent,
     );
     isEditing
-        ? NoteDb.instance.updateNote(value: noteModel)
+        ? NoteDb.instance.updateNote(index: widget.index, value: noteModel)
         : NoteDb.instance.addNoteDb(noteModel);
     NoteDb.instance.refreshNoteUi();
 
