@@ -55,28 +55,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: newList.length,
                       itemBuilder: (context, index) {
                         final values = newList[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                title = values.title;
-                                isViewing = true;
-                                isEditing = true;
-                              });
-                              Get.to(
-                                () => AllInOneScreen(
-                                  model: values,
+                        return newList.isEmpty
+                            ? Column(
+                                children: const [
+                                  CircularProgressIndicator(),
+                                  Text(
+                                    'No Notes Added',
+                                  ),
+                                ],
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      title = values.title;
+                                      isViewing = true;
+                                      isEditing = true;
+                                    });
+                                    Get.to(
+                                      () => AllInOneScreen(
+                                        model: values,
+                                      ),
+                                    );
+                                  },
+                                  child: NoteGrid(
+                                    content: values.content,
+                                    title: values.title,
+                                    id: values.id,
+                                  ),
                                 ),
                               );
-                            },
-                            child: NoteGrid(
-                              content: values.content,
-                              title: values.title,
-                              id: values.id,
-                            ),
-                          ),
-                        );
                       },
                     );
                   }),
