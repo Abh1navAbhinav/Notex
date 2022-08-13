@@ -49,7 +49,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
           title: Text.rich(
             TextSpan(
               children: [
-                !isViewing
+                isViewing == false && isEditing ==true
                     ? TextSpan(
                         text: 'Edit : ',
                         style: GoogleFonts.signikaNegative(
