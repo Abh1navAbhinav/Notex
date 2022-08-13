@@ -24,7 +24,7 @@ class NoteDb implements NoteDbFunctions {
   @override
   Future<void> addNoteDb(NoteModel obj) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
-    await dB.add(obj);
+    await dB.put(obj.id , obj);
     refreshNoteUi();
   }
 
