@@ -44,27 +44,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ValueListenableBuilder(
                   valueListenable: noteModelNotifier,
                   builder: (BuildContext context, List<NoteModel> newList, _) {
-                    return GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 5,
-                      ),
-                      itemCount: newList.length,
-                      itemBuilder: (context, index) {
-                        final values = newList[index];
-                        return newList.isEmpty
-                            ? Column(
-                                children: const [
-                                  CircularProgressIndicator(),
-                                  Text(
-                                    'No Notes Added',
-                                  ),
-                                ],
-                              )
-                            : Padding(
+                    return newList.isEmpty
+                        ? const Center(child: Text('No Notes Added'))
+                        : GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 5,
+                            ),
+                            itemCount: newList.length,
+                            itemBuilder: (context, index) {
+                              final values = newList[index];
+                              return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () {
@@ -86,8 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               );
-                      },
-                    );
+                            },
+                          );
                   }),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 12,
