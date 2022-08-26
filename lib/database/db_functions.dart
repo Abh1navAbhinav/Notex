@@ -6,15 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notex/main.dart';
 import 'package:notex/notex_model/note_model.dart';
 
-abstract class NoteDbFunctions {
-  Future<void> addNoteDb(NoteModel obj);
-  Future<List<NoteModel>> getAllNote();
-  Future<void> deleteNote(String id);
-  Future<void> refreshNoteUi();
-  // Future<void> updateNote({required index, required value});
-}
-
-class NoteDb implements NoteDbFunctions {
+class NoteDb {
   NoteDb._internal();
   static NoteDb instance = NoteDb._internal();
 
@@ -22,7 +14,6 @@ class NoteDb implements NoteDbFunctions {
     return instance;
   }
 
-  @override
   Future<void> addNoteDb(NoteModel obj) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
     await dB.put(obj.id, obj);
@@ -36,7 +27,6 @@ class NoteDb implements NoteDbFunctions {
   //   refreshNoteUi();
   // }
 
-  @override
   Future<void> deleteNote(String id) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
     await dB.delete(id);
@@ -45,13 +35,11 @@ class NoteDb implements NoteDbFunctions {
     refreshNoteUi();
   }
 
-  @override
   Future<List<NoteModel>> getAllNote() async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
     return dB.values.toList();
   }
 
-  @override
   Future<void> refreshNoteUi() async {
     var noteList = await getAllNote();
     noteList = noteList.reversed.toList();

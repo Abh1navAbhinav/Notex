@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   valueListenable: noteModelNotifier,
                   builder: (BuildContext context, List<NoteModel> newList, _) {
                     return newList.isEmpty
-                        ? const Center(child: Text('No Notes Added'))
+                        ? const Center(child: CircularProgressIndicator())
                         : GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
