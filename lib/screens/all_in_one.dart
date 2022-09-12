@@ -30,7 +30,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
 
   @override
   void initState() {
-    if (isEditing) {
+    if (isEditing.value) {
       titleController.text = widget.model!.title;
       contentController.text = widget.model!.content;
     }
@@ -47,45 +47,47 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 11, 97, 103),
-          title: Text.rich(
-            TextSpan(
-              children: [
-                isViewing == false && isEditing == true
-                    ? TextSpan(
-                        text: 'Edit : ',
-                        style: GoogleFonts.signikaNegative(
-                          fontSize: 25,
-                          color: const Color.fromARGB(255, 0, 230, 246),
+          title: Obx(
+            () => Text.rich(
+              TextSpan(
+                children: [
+                  isViewing.value == false && isEditing.value == true
+                      ? TextSpan(
+                          text: 'Edit : ',
+                          style: GoogleFonts.signikaNegative(
+                            fontSize: 25,
+                            color: const Color.fromARGB(255, 0, 230, 246),
+                          ),
+                        )
+                      : const TextSpan(
+                          text: '',
                         ),
-                      )
-                    : const TextSpan(
-                        text: '',
-                      ),
-                TextSpan(
-                  text: title,
-                  style: GoogleFonts.quicksand(
-                    fontSize: 25,
-                    color: Colors.white,
+                  TextSpan(
+                    text: title.value,
+                    style: GoogleFonts.quicksand(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           actions: [
-            isViewing
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        title = widget.model!.title;
-                        isEditing = true;
-                        isViewing = false;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.edit_note_rounded,
-                    ),
-                  )
-                : const Text(''),
+            Obx(
+              () => isViewing.value
+                  ? IconButton(
+                      onPressed: () {
+                        title.value = widget.model!.title;
+                        isEditing.value = true;
+                        isViewing.value = false;
+                      },
+                      icon: const Icon(
+                        Icons.edit_note_rounded,
+                      ),
+                    )
+                  : const Text(''),
+            ),
           ],
           centerTitle: true,
         ),
@@ -101,29 +103,31 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                   horizontal: 50,
                   vertical: 8,
                 ),
-                child: !isViewing
-                    ? Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 8, 42, 58),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: TextFormField(
-                          controller: titleController,
-                          readOnly: isViewing,
-                          decoration: InputDecoration(
-                            hintText: 'Title',
-                            hintStyle:
-                                GoogleFonts.roboto(color: Colors.white60),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                child: Obx(
+                  () => !isViewing.value
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 8, 42, 58),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          style: GoogleFonts.roboto(color: Colors.white),
+                          child: TextFormField(
+                            controller: titleController,
+                            readOnly: isViewing.value,
+                            decoration: InputDecoration(
+                              hintText: 'Title',
+                              hintStyle:
+                                  GoogleFonts.roboto(color: Colors.white60),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            style: GoogleFonts.roboto(color: Colors.white),
+                          ),
+                        )
+                      : const SizedBox(
+                          height: 20,
                         ),
-                      )
-                    : const SizedBox(
-                        height: 20,
-                      ),
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 19,
@@ -137,51 +141,55 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                     borderRadius: BorderRadius.circular(20),
                     color: const Color.fromARGB(255, 0, 230, 246),
                   ),
-                  child: TextFormField(
-                    controller: contentController,
-                    readOnly: isViewing,
-                    decoration: InputDecoration(
-                      hintText: 'Enter the notes...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                  child: Obx(
+                    () => TextFormField(
+                      controller: contentController,
+                      readOnly: isViewing.value,
+                      decoration: InputDecoration(
+                        hintText: 'Enter the notes...',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        filled: true,
                       ),
-                      filled: true,
+                      maxLines: 20,
                     ),
-                    maxLines: 20,
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 19,
-                  left: MediaQuery.of(context).size.width / 1.5,
-                  right: 8,
+              Obx(
+                () => Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height / 19,
+                    left: MediaQuery.of(context).size.width / 1.5,
+                    right: 8,
+                  ),
+                  child: isViewing.value
+                      ? null
+                      : isEditing.value
+                          ? FloatingActionButton.extended(
+                              onPressed: () {
+                                addNote();
+                              },
+                              label: const Text(
+                                'Update',
+                              ),
+                              icon: const Icon(Icons.update_rounded),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 8, 42, 58),
+                            )
+                          : FloatingActionButton.extended(
+                              onPressed: () {
+                                addNote();
+                              },
+                              label: const Text(
+                                'Submit',
+                              ),
+                              icon: const Icon(Icons.upload_file_outlined),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 8, 42, 58),
+                            ),
                 ),
-                child: isViewing
-                    ? null
-                    : isEditing
-                        ? FloatingActionButton.extended(
-                            onPressed: () {
-                              addNote();
-                            },
-                            label: const Text(
-                              'Update',
-                            ),
-                            icon: const Icon(Icons.update_rounded),
-                            backgroundColor:
-                                const Color.fromARGB(255, 8, 42, 58),
-                          )
-                        : FloatingActionButton.extended(
-                            onPressed: () {
-                              addNote();
-                            },
-                            label: const Text(
-                              'Submit',
-                            ),
-                            icon: const Icon(Icons.upload_file_outlined),
-                            backgroundColor:
-                                const Color.fromARGB(255, 8, 42, 58),
-                          ),
               ),
             ],
           ),
@@ -211,7 +219,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
       title: noteTitle,
       content: noteContent,
     );
-    isEditing
+    isEditing.value
         ? widget.model!.updateNoteDb(noteModel)
         : myController.addNoteDb(noteModel);
     myController.refreshNoteUi();
@@ -219,7 +227,9 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
     Get.back();
     showSnackbar(
       context: context,
-      text: isEditing ? 'Note updated succefully' : 'Note added succesfully',
+      text: isEditing.value
+          ? 'Note updated succefully'
+          : 'Note added succesfully',
       textcolor: Colors.green,
     );
   }

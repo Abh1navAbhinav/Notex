@@ -5,9 +5,9 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:notex/notex_model/note_model.dart';
 import 'package:notex/screens/home.dart';
 
-bool isEditing = true;
-bool isViewing = true;
-String title = 'Title';
+var isEditing = true.obs;
+var isViewing = true.obs;
+var title = 'Title'.obs;
 
 const noteDbName = 'Note-db';
 
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               primary: const Color.fromARGB(255, 27, 88, 83),
             ),
       ),
-      home: const HomeScreen(),
+      home:   HomeScreen(),
     );
   }
 }

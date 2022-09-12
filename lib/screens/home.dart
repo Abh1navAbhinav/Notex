@@ -8,20 +8,11 @@ import 'package:notex/styles/styles.dart';
 import 'package:notex/widgets/note_grid.dart';
 
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+    HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final myController = Get.put(NoteDb());
-  @override
-  void initState() {
-    myController.refreshNoteUi();
-    super.initState();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  title = values.title;
-                                  isViewing = true;
-                                  isEditing = true;
-                                });
+                         
+                                  title.value = values.title;
+                                  isViewing.value = true;
+                                  isEditing.value = true;
+                             
                                 Get.to(
                                   () => AllInOneScreen(
                                     index: index,
@@ -109,11 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: const Color.fromARGB(255, 8, 42, 58),
           onPressed: () {
-            setState(() {
-              isEditing = false;
-              isViewing = false;
-              title = 'Add New Note';
-            });
+         
+              isEditing.value = false;
+              isViewing.value = false;
+              title.value = 'Add New Note';
+           
             // NoteDb.instance.refreshNoteUi();
             Get.to(() => AllInOneScreen());
           },
