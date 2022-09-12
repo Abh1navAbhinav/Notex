@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notex/database/db_functions.dart';
 import 'package:notex/notex_model/note_model.dart';
@@ -24,6 +24,7 @@ class AllInOneScreen extends StatefulWidget {
 }
 
 class _AllInOneScreenState extends State<AllInOneScreen> {
+  final myController = Get.put(NoteDb());
   final titleController = TextEditingController();
   final contentController = TextEditingController();
 
@@ -212,8 +213,8 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
     );
     isEditing
         ? widget.model!.updateNoteDb(noteModel)
-        : NoteDb.instance.addNoteDb(noteModel);
-    NoteDb.instance.refreshNoteUi();
+        : myController.addNoteDb(noteModel);
+    myController.refreshNoteUi();
 
     Get.back();
     showSnackbar(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notex/database/db_functions.dart';
 import 'package:notex/main.dart';
@@ -7,7 +7,6 @@ import 'package:notex/screens/all_in_one.dart';
 import 'package:notex/styles/styles.dart';
 import 'package:notex/widgets/note_grid.dart';
 
-import '../notex_model/note_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,9 +16,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final myController = Get.put(NoteDb());
   @override
   void initState() {
-    NoteDb.instance.refreshNoteUi();
+    myController.refreshNoteUi();
     super.initState();
   }
 
@@ -60,48 +60,46 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 20,
               ),
-              ValueListenableBuilder(
-                  valueListenable: noteModelNotifier,
-                  builder: (BuildContext context, List<NoteModel> newList, _) {
-                    return newList.isEmpty
-                        ? const Center(child: CircularProgressIndicator())
-                        : GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 5,
-                            ),
-                            itemCount: newList.length,
-                            itemBuilder: (context, index) {
-                              final values = newList[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      title = values.title;
-                                      isViewing = true;
-                                      isEditing = true;
-                                    });
-                                    Get.to(
-                                      () => AllInOneScreen(
-                                        index: index,
-                                        model: values,
-                                      ),
-                                    );
-                                  },
-                                  child: NoteGrid(
-                                    content: values.content,
-                                    title: values.title,
-                                    id: values.id,
+              GetBuilder<NoteDb>(
+                builder: (controller) => myController.noteModelList.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 5,
+                        ),
+                        itemCount: myController.noteModelList.length,
+                        itemBuilder: (context, index) {
+                          final values = myController.noteModelList[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  title = values.title;
+                                  isViewing = true;
+                                  isEditing = true;
+                                });
+                                Get.to(
+                                  () => AllInOneScreen(
+                                    index: index,
+                                    model: values,
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                              child: NoteGrid(
+                                content: values.content,
+                                title: values.title,
+                                id: values.id,
+                              ),
+                            ),
                           );
-                  }),
+                        },
+                      ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 12,
               )

@@ -1,10 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notex/database/db_functions.dart';
 
 class NoteGrid extends StatelessWidget {
+  final myController = Get.put(NoteDb());
   NoteGrid({
     Key? key,
     required this.title,
@@ -14,7 +16,6 @@ class NoteGrid extends StatelessWidget {
   String title;
   String content;
   String id;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,10 +39,10 @@ class NoteGrid extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  NoteDb.instance.deleteNote(id);
+                  myController.deleteNote(id);
                 },
                 icon: const Icon(
-                  Icons.delete,
+                  Icons.delete,                                                                                   
                 ),
               ),
               backgroundColor: const Color.fromARGB(255, 8, 42, 58),
@@ -63,3 +64,4 @@ class NoteGrid extends StatelessWidget {
     );
   }
 }
+ 

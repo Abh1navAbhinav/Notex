@@ -10,7 +10,6 @@ bool isViewing = true;
 String title = 'Title';
 
 const noteDbName = 'Note-db';
-ValueNotifier<List<NoteModel>> noteModelNotifier = ValueNotifier([]);
 
 
 Future<void> main() async {
