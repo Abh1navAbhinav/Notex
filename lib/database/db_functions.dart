@@ -1,22 +1,26 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
 
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notex/main.dart';
 import 'package:notex/notex_model/note_model.dart';
 
-class NoteDb {
-  NoteDb._internal();
-  static NoteDb instance = NoteDb._internal();
+class NoteDb extends GetxController {
+ List<NoteModel> noteModelList = [];
+  
+  // NoteDb._internal();
+  // static NoteDb instance = NoteDb._internal();
 
-  factory NoteDb() {
-    return instance;
-  }
+  // factory NoteDb() {
+  //   return instance;
+  // }
 
   Future<void> addNoteDb(NoteModel obj) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
     await dB.put(obj.id, obj);
     refreshNoteUi();
+    update();
   }
 
   // @override
@@ -32,18 +36,22 @@ class NoteDb {
 
    
     refreshNoteUi();
+    update();
   }
 
   Future<List<NoteModel>> getAllNote() async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
+    update();
     return dB.values.toList();
   }
 
   Future<void> refreshNoteUi() async {
     var noteList = await getAllNote();
     noteList = noteList.reversed.toList();
-    noteModelNotifier.value.clear();
-    noteModelNotifier.value.addAll(noteList);
-    noteModelNotifier.notifyListeners();
+    noteModelList.clear();
+    noteModelList.addAll(noteList);
+    // noteModelList.notifyListeners();
+    update();
   }
+  
 }
