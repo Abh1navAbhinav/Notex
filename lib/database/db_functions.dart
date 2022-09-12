@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
-import 'dart:developer';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notex/main.dart';
@@ -31,7 +30,7 @@ class NoteDb {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
     await dB.delete(id);
 
-    log(id);
+   
     refreshNoteUi();
   }
 

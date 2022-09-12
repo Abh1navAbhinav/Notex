@@ -49,7 +49,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
           title: Text.rich(
             TextSpan(
               children: [
-                isViewing == false && isEditing ==true
+                isViewing == false && isEditing == true
                     ? TextSpan(
                         text: 'Edit : ',
                         style: GoogleFonts.signikaNegative(
@@ -96,33 +96,34 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                 height: MediaQuery.of(context).size.height / 19,
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 50,
-                    vertical: 8,
-                  ),
-                  child: !isViewing
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 8, 42, 58),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: TextFormField(
-                            controller: titleController,
-                            readOnly: isViewing,
-                            decoration: InputDecoration(
-                              hintText: 'Title',
-                              hintStyle:
-                                  GoogleFonts.roboto(color: Colors.white60),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 8,
+                ),
+                child: !isViewing
+                    ? Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 8, 42, 58),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: TextFormField(
+                          controller: titleController,
+                          readOnly: isViewing,
+                          decoration: InputDecoration(
+                            hintText: 'Title',
+                            hintStyle:
+                                GoogleFonts.roboto(color: Colors.white60),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            style: GoogleFonts.roboto(color: Colors.white),
                           ),
-                        )
-                      : const SizedBox(
-                          height: 20,
-                        )),
+                          style: GoogleFonts.roboto(color: Colors.white),
+                        ),
+                      )
+                    : const SizedBox(
+                        height: 20,
+                      ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 19,
               ),
