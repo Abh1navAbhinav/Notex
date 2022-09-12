@@ -77,7 +77,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
             Obx(
               () => isViewing.value
                   ? IconButton(
-                      onPressed: () {
+                      onPressed: () { 
                         title.value = widget.model!.title;
                         isEditing.value = true;
                         isViewing.value = false;
@@ -169,7 +169,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                       : isEditing.value
                           ? FloatingActionButton.extended(
                               onPressed: () {
-                                addNote();
+                                addNote(context);
                               },
                               label: const Text(
                                 'Update',
@@ -180,7 +180,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                             )
                           : FloatingActionButton.extended(
                               onPressed: () {
-                                addNote();
+                                addNote(context);
                               },
                               label: const Text(
                                 'Submit',
@@ -198,7 +198,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
     );
   }
 
-  Future<void> addNote() async {
+  Future<void> addNote(context) async {
     final noteTitle = titleController.text;
     final noteContent = contentController.text;
 

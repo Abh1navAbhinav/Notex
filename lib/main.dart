@@ -9,6 +9,7 @@ var isEditing = true.obs;
 var isViewing = true.obs;
 var title = 'Title'.obs;
 
+
 const noteDbName = 'Note-db';
 
 
