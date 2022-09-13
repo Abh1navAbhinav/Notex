@@ -15,6 +15,8 @@ class NoteDb extends GetxController {
   //   return instance;
   // }
 
+
+
   Future<void> addNoteDb(NoteModel obj) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
     await dB.put(obj.id, obj);
@@ -55,6 +57,14 @@ class NoteDb extends GetxController {
   @override
   void onInit() {
     refreshNoteUi();
+    //  if (isEditing.value) {
+    //   titleController.text = model!.title;
+    //   contentController.text = model!.content;
+    // }
     super.onInit();
   }
+
+  
+
+  
 }

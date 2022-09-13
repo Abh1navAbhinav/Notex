@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notex/database/allinone_controller.dart';
 import 'package:notex/database/db_functions.dart';
 import 'package:notex/main.dart';
 import 'package:notex/screens/all_in_one.dart';
 import 'package:notex/styles/styles.dart';
 import 'package:notex/widgets/note_grid.dart';
 
-
 class HomeScreen extends StatelessWidget {
-    HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   final myController = Get.put(NoteDb());
- 
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +68,17 @@ class HomeScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                         
-                                  title.value = values.title;
-                                  isViewing.value = true;
-                                  isEditing.value = true;
-                             
+
+                                title.value = values.title;
+                                isViewing.value = true;
+                                isEditing.value = true;
+                                final allController = Get.put(AllController());
+
+                                  allController.contentController.text = values.content;
+                                  allController.titleController .text =values.title;
+
+                                // allController.getData(
+                                //     noteModel: values, idxs: index);
                                 Get.to(
                                   () => AllInOneScreen(
                                     index: index,
@@ -100,11 +105,10 @@ class HomeScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: const Color.fromARGB(255, 8, 42, 58),
           onPressed: () {
-         
-              isEditing.value = false;
-              isViewing.value = false;
-              title.value = 'Add New Note';
-           
+            isEditing.value = false;
+            isViewing.value = false;
+            title.value = 'Add New Note';
+
             // NoteDb.instance.refreshNoteUi();
             Get.to(() => AllInOneScreen());
           },

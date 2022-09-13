@@ -1,44 +1,32 @@
 // ignore_for_file: must_be_immutable
 
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:notex/database/db_functions.dart';
+import 'package:notex/database/allinone_controller.dart';
 import 'package:notex/notex_model/note_model.dart';
 import 'package:notex/styles/styles.dart';
-import 'package:notex/widgets/snack_bar.dart';
 import '../main.dart';
 
-class AllInOneScreen extends StatefulWidget {
+class AllInOneScreen extends GetView<AllController> {
   AllInOneScreen({
     Key? key,
-    this.model,
-    this.index,
+     this.model,
+     this.index,
   }) : super(key: key);
 
   NoteModel? model;
   int? index;
 
-  @override
-  State<AllInOneScreen> createState() => _AllInOneScreenState();
-}
+ 
+  final myController = Get.put(AllController());
 
-class _AllInOneScreenState extends State<AllInOneScreen> {
-  final myController = Get.put(NoteDb());
-  final titleController = TextEditingController();
-  final contentController = TextEditingController();
 
-  @override
-  void initState() {
-    if (isEditing.value) {
-      titleController.text = widget.model!.title;
-      contentController.text = widget.model!.content;
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       decoration: BoxDecoration(
         gradient: Styles().scaffoldColor(),
@@ -78,7 +66,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
               () => isViewing.value
                   ? IconButton(
                       onPressed: () { 
-                        title.value = widget.model!.title;
+                        title.value =model!.title;
                         isEditing.value = true;
                         isViewing.value = false;
                       },
@@ -111,7 +99,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: TextFormField(
-                            controller: titleController,
+                            controller:myController. titleController,
                             readOnly: isViewing.value,
                             decoration: InputDecoration(
                               hintText: 'Title',
@@ -143,7 +131,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                   ),
                   child: Obx(
                     () => TextFormField(
-                      controller: contentController,
+                      controller:myController. contentController,
                       readOnly: isViewing.value,
                       decoration: InputDecoration(
                         hintText: 'Enter the notes...',
@@ -169,7 +157,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                       : isEditing.value
                           ? FloatingActionButton.extended(
                               onPressed: () {
-                                addNote(context);
+                             myController.   addNote(context);
                               },
                               label: const Text(
                                 'Update',
@@ -180,7 +168,7 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
                             )
                           : FloatingActionButton.extended(
                               onPressed: () {
-                                addNote(context);
+                              myController.  addNote(context);
                               },
                               label: const Text(
                                 'Submit',
@@ -198,39 +186,39 @@ class _AllInOneScreenState extends State<AllInOneScreen> {
     );
   }
 
-  Future<void> addNote(context) async {
-    final noteTitle = titleController.text;
-    final noteContent = contentController.text;
+  // Future<void> addNote(context) async {
+  //   final noteTitle = titleController.text;
+  //   final noteContent = contentController.text;
 
-    if (noteTitle.isEmpty) {
-      return showSnackbar(
-        context: context,
-        text: 'Note title is empty',
-      );
-    }
-    if (noteContent.isEmpty) {
-      return showSnackbar(
-        context: context,
-        text: 'Note Content is empty',
-      );
-    }
-    final noteModel = NoteModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: noteTitle,
-      content: noteContent,
-    );
-    isEditing.value
-        ? widget.model!.updateNoteDb(noteModel)
-        : myController.addNoteDb(noteModel);
-    myController.refreshNoteUi();
+  //   if (noteTitle.isEmpty) {
+  //     return showSnackbar(
+  //       context: context,
+  //       text: 'Note title is empty',
+  //     );
+  //   }
+  //   if (noteContent.isEmpty) {
+  //     return showSnackbar(
+  //       context: context,
+  //       text: 'Note Content is empty',
+  //     );
+  //   }
+  //   final noteModel = NoteModel(
+  //     id: DateTime.now().millisecondsSinceEpoch.toString(),
+  //     title: noteTitle,
+  //     content: noteContent,
+  //   );
+  //   isEditing.value
+  //       ? widget.model!.updateNoteDb(noteModel)
+  //       : myController.addNoteDb(noteModel);
+  //   myController.refreshNoteUi();
 
-    Get.back();
-    showSnackbar(
-      context: context,
-      text: isEditing.value
-          ? 'Note updated succefully'
-          : 'Note added succesfully',
-      textcolor: Colors.green,
-    );
-  }
+  //   Get.back();
+  //   showSnackbar(
+  //     context: context,
+  //     text: isEditing.value
+  //         ? 'Note updated succefully'
+  //         : 'Note added succesfully',
+  //     textcolor: Colors.green,
+  //   );
+  // }
 }
