@@ -185,40 +185,4 @@ class AllInOneScreen extends GetView<AllController> {
       ),
     );
   }
-
-  // Future<void> addNote(context) async {
-  //   final noteTitle = titleController.text;
-  //   final noteContent = contentController.text;
-
-  //   if (noteTitle.isEmpty) {
-  //     return showSnackbar(
-  //       context: context,
-  //       text: 'Note title is empty',
-  //     );
-  //   }
-  //   if (noteContent.isEmpty) {
-  //     return showSnackbar(
-  //       context: context,
-  //       text: 'Note Content is empty',
-  //     );
-  //   }
-  //   final noteModel = NoteModel(
-  //     id: DateTime.now().millisecondsSinceEpoch.toString(),
-  //     title: noteTitle,
-  //     content: noteContent,
-  //   );
-  //   isEditing.value
-  //       ? widget.model!.updateNoteDb(noteModel)
-  //       : myController.addNoteDb(noteModel);
-  //   myController.refreshNoteUi();
-
-  //   Get.back();
-  //   showSnackbar(
-  //     context: context,
-  //     text: isEditing.value
-  //         ? 'Note updated succefully'
-  //         : 'Note added succesfully',
-  //     textcolor: Colors.green,
-  //   );
-  // }
 }

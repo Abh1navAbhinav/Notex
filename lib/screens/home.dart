@@ -68,17 +68,16 @@ class HomeScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-
                                 title.value = values.title;
                                 isViewing.value = true;
                                 isEditing.value = true;
                                 final allController = Get.put(AllController());
 
-                                  allController.contentController.text = values.content;
-                                  allController.titleController .text =values.title;
+                                allController.contentController.text =
+                                    values.content;
+                                allController.titleController.text =
+                                    values.title;
 
-                                // allController.getData(
-                                //     noteModel: values, idxs: index);
                                 Get.to(
                                   () => AllInOneScreen(
                                     index: index,
@@ -109,7 +108,6 @@ class HomeScreen extends StatelessWidget {
             isViewing.value = false;
             title.value = 'Add New Note';
 
-            // NoteDb.instance.refreshNoteUi();
             Get.to(() => AllInOneScreen());
           },
           label: const Text('Add'),

@@ -10,7 +10,9 @@ showSnackbar({
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
       backgroundColor: backgroundColor,
       duration: const Duration(seconds: 2),
       content: Row(
