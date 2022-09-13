@@ -8,7 +8,6 @@ import 'package:notex/widgets/snack_bar.dart';
 class AllController extends GetxController {
   NoteModel? model;
   int? index;
-  // AllController({this.model,this.index});
   final noteControlr = Get.put(NoteDb());
 
   final titleController = TextEditingController();

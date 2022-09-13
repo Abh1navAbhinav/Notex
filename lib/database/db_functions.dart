@@ -8,14 +8,6 @@ import 'package:notex/notex_model/note_model.dart';
 class NoteDb extends GetxController {
   List<NoteModel> noteModelList = [];
 
-  // NoteDb._internal();
-  // static NoteDb instance = NoteDb._internal();
-
-  // factory NoteDb() {
-  //   return instance;
-  // }
-
-
 
   Future<void> addNoteDb(NoteModel obj) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
@@ -23,13 +15,6 @@ class NoteDb extends GetxController {
     refreshNoteUi();
     update();
   }
-
-  // @override
-  // Future<void> updateNote({required index, required value}) async {
-  //   final dB = await Hive.openBox<NoteModel>(noteDbName);
-  //   await dB.putAt(index, value);
-  //   refreshNoteUi();
-  // }
 
   Future<void> deleteNote(String id) async {
     final dB = await Hive.openBox<NoteModel>(noteDbName);
@@ -50,17 +35,12 @@ class NoteDb extends GetxController {
     noteList = noteList.reversed.toList();
     noteModelList.clear();
     noteModelList.addAll(noteList);
-    // noteModelList.notifyListeners();
     update();
   }
 
   @override
   void onInit() {
     refreshNoteUi();
-    //  if (isEditing.value) {
-    //   titleController.text = model!.title;
-    //   contentController.text = model!.content;
-    // }
     super.onInit();
   }
 
